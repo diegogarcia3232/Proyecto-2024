@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menú Desplegable</title>
+<style>
+  /* Estilos para el menú */
+  .dropbtn {
+    width: 90%;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+  .dropdown {
+    position:relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%; /* Mostrar el menú desplegable debajo del botón */
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #fcc10f;}
+</style>
+</head>
+<body>
+
+<div class="dropdown">
+  <button class="dropbtn">Selecciona una opción</button>
+  <div class="dropdown-content">
+    <a href="#">Opción 1</a>
+    <a href="#">Opción 2</a>
+    <a href="#">Opción 3</a>
+  </div>
+</div>
+
+<script>
+  // JavaScript para abrir el menú desplegable de arriba hacia abajo
+  document.addEventListener('DOMContentLoaded', function() {
+    var dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(function(dropdown) {
+      dropdown.addEventListener('click', function(event) {
+        var dropdownContent = this.querySelector('.dropdown-content');
+        dropdownContent.classList.toggle('show');
+      });
+    });
+    window.addEventListener('click', function(event) {
+      dropdowns.forEach(function(dropdown) {
+        if (!dropdown.contains(event.target)) {
+          var dropdownContent = dropdown.querySelector('.dropdown-content');
+          dropdownContent.classList.remove('show');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
