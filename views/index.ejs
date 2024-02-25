@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página</title>
+
+    <!-- Hojas de estilos utilizadas -->
+    <link rel="stylesheet" href="/estilos/estilos.css">
+    <link rel="stylesheet" href="/estilos/dropdown.css">
+
+    <style>
+        /* Para editar estilos de forma local */
+    </style>
+    
+</head>
+<body>
+    <background></background>
+
+    <div class="header">AutoHistory</div>
+    <div class="container">
+
+        <label for="cars">Choose a car:</label>
+        <select name="cars" id="cars" class="select-box">
+            <optgroup label="Coches Suecos">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+            </optgroup>
+            <optgroup label="Coches Alemanas">
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </optgroup>
+        </select>
+
+        <hr width="75%" color="black"/>
+
+        <div class="dropdown">
+            <button class="dropbtn">Selecciona una opción</button>
+            <div class="dropdown-content">
+              <a href="#">Opción 1</a>
+              <a href="#">Opción 2</a>
+              <a href="#">Opción 3</a>
+            </div>
+        </div>
+
+        <hr width="75%" color="black"/>
+
+        <form id="formularioAuto" action="/validar" method="post">
+            <input type="text" name="marca" id="marca" placeholder="Marca">
+            <input type="text" name="modelo" id="modelo" placeholder="Modelo">
+            <input type="text" name="matricula" id="matricula" placeholder="Matricula">
+            <!-- Más campos aquí -->
+            <!-- <button type="submit">Enviar</button> -->
+            <input type="submit" value="Registrar">
+        </form>
+
+        <hr width="75%" color="black"/>
+
+        <button class="boton">Buscar</button>
+    </div>
+
+    
+    <!-- Scripts finales importados -->
+    <!-- <script src="js/conexion.js"></script> -->
+
+    <script>
+        // Para editar scripts de forma local
+    </script>
+
+</body>
+</html>

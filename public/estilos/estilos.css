@@ -1,0 +1,96 @@
+/* MAIN ELEMENTS */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 24px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 50px auto;
+    width: 300px;
+    background-color: #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    top: 48px;
+    background-image: url('/imagenes/Porsches.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* .container {
+    background: green;
+    width: 420px;
+    border: 2px solid
+    rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color:#fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+} */
+
+/* Botones y menu */
+.select-box, .dropbtn {
+    width: 80%;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.dropbtn {
+    width: 100%;
+    margin-bottom: 0px;
+}
+
+.dropdown {
+    width: 80%;
+    margin-bottom: 30px; /* Centra horizontalmente */
+    text-align: center; /* Alinea el texto en el centro */
+}
+
+.boton {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: rgb(229, 173, 31);;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.boton:hover {
+    background-color: #ffa600; /* Cambio de color al pasar el ratón */
+}
+
+label {
+    align-self: flex-start;
+    margin-left: 10%;
+}
