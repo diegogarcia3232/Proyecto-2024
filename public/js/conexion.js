@@ -18,7 +18,7 @@ conexion.connect(err => {
     }
 });
 
-function select_all(tabla) {
+function mm(tabla) {
     // petición de selección general en tabla
     const select = "SELECT * FROM " + tabla;
     conexion.query(select, (err, rows) => {
@@ -26,7 +26,7 @@ function select_all(tabla) {
             throw err;
         }else{
             console.log("Consulta realizada correctamente");
-            console.log(rows);
+            console.log(rows);    
             console.log(rows.length);
             console.log(rows[0]);
             // console.log(rows[0].modelo);
@@ -74,3 +74,4 @@ function break_mysql(){
     // finalizar conexión mysql
     conexion.end();
 }
+

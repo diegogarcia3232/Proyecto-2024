@@ -8,6 +8,7 @@
     <!-- Hojas de estilos utilizadas -->
     <link rel="stylesheet" href="/estilos/estilos.css">
     <link rel="stylesheet" href="/estilos/dropdown.css">
+    <link rel="stylesheet" href="/js/prueba.php">
 
     <style>
         /* Para editar estilos de forma local */
@@ -18,28 +19,26 @@
     <background></background>
 
     <div class="header">AutoHistory</div>
-    <div class="container">
+    <div class="container" style="display: flex;">
 
-        <label for="cars">Choose a car:</label>
-        <select name="cars" id="cars" class="select-box">
-            <optgroup label="Coches Suecos">
+        <label for="marcas">Choose a brand:</label>
+        <select name="marcas" id="marcas" class="select-box">
+            <!-- <optgroup label="Coches Suecos">
                 <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
+                <option value="saab">BMW</option>
             </optgroup>
             <optgroup label="Coches Alemanas">
                 <option value="mercedes">Mercedes</option>
                 <option value="audi">Audi</option>
-            </optgroup>
+            </optgroup> -->
         </select>
 
         <hr width="75%" color="black"/>
 
-        <div class="dropdown">
-            <button class="dropbtn">Selecciona una opción</button>
-            <div class="dropdown-content">
-              <a href="#">Opción 1</a>
-              <a href="#">Opción 2</a>
-              <a href="#">Opción 3</a>
+        <div class="dropdown" id="Audi" style="display: none;">
+            <button class="dropbtn">Selecciona el modelo</button>
+            <div class="dropdown-content" id="modelContainer">
+                
             </div>
         </div>
 
@@ -64,7 +63,78 @@
     <!-- <script src="js/conexion.js"></script> -->
 
     <script>
-        // Para editar scripts de forma local
+        // 1. Selecciona el elemento <select> por su ID
+        const brandSelect = document.getElementById('marcas');
+
+        // 2. Añadimos las opciones al select desde la base de datos
+        fetch('/api/brands')
+            .then(response => response.json())
+            .then(brands => {
+                var i = 0;
+                brands.forEach(brand => {
+                    // console.log("marca #" + i + ": " + brand.marca);
+                    // console.log(brand);
+                    // i++;
+                    const option = document.createElement('option');
+                    option.value = brand.marca;
+                    option.textContent = brand.marca;
+                    brandSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error al enviar el valor:', error);
+            });
+
+        // 3. Selecciona el elemento <select> por su ID
+        const modelContainer = document.getElementById('modelContainer');
+
+        // 4. Crea un event handler para el evento 'change'
+        brandSelect.addEventListener('change', function(event) {
+            // 5. Obtiene el valor actual seleccionado
+            const selectedValue = event.target.value;
+
+            // Parámetros que deseas enviar (en este caso, un objeto con una clave "parametro" y un valor)
+            const parametros = {
+                parametro: selectedValue
+            };
+
+            // Configuración del objeto de solicitud
+            const opciones = {
+                method: 'GET', // Método de solicitud (puede ser POST, GET, PUT, DELETE, etc.)
+                headers: {
+                    'Content-Type': 'application/json' // Tipo de contenido que estás enviando
+                },
+                body: JSON.stringify(parametros) // Convertir el objeto de parámetros a formato JSON
+            };
+
+            // 6. Llama a una función de Express enviando el valor seleccionado como parámetro
+            enviarValorSeleccionado(selectedValue, opciones);
+        });
+
+        // 7. Función para enviar el valor seleccionado a Express
+        function enviarValorSeleccionado(valor, opciones) {
+            // Aquí puedes hacer una petición HTTP a tu servidor Express
+            // para procesar el valor seleccionado. Por ejemplo:
+            const selectedBrand = brandSelect.value;
+            modelContainer.innerHTML = ''; // Clear existing models
+
+            // Fetch car models for the selected brand
+            fetch('/api/models', opciones)
+            .then(response => response.json())
+            .then(models => {
+                var i = 0;
+                models.forEach(model => {
+                    console.log("modelo #" + i + ": " + model.modelo);
+                    console.log(model);
+                    i++;
+                    // const button = document.createElement('button');
+                    // button.textContent = model;
+                    // modelContainer.appendChild(button);
+                });
+            });
+        };
+
+
     </script>
 
 </body>

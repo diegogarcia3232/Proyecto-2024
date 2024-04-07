@@ -1,3 +1,6 @@
+// Esto es una API que permite conectar con la base de datos MySQL. Application Programing Interface.
+// MySQL: realiza conexión con el servidor, permite ejecutar comandos de solicitudes al servidor.
+// Express: inicia un servidor local que permite interconectar las peticiones HTTP con las solicitudes a la base de datos.
 
 // -------------
 // --- MySQL ---
@@ -116,6 +119,35 @@ app.post("/validar", (req,res)=>{
 
     insert_car('coches', marca, modelo, matricula);
 })
+
+// Método de la API para recoger las marcas existentes en la base de datos:
+app.get('/api/brands', (req, res) => {
+    conexion.query('SELECT DISTINCT marca FROM coches', (err, results) => {
+        if (err) {
+            console.error('Error fetching car brands:', err);
+            res.status(500).json({ error: 'Internal server error' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+// Método de la API para obtener todos los modelos asociados a una marca concreta:
+app.get('/api/models', (req, res) => {
+    console.log('hola');
+    const brand = req.query.parametro;
+    console.log('SELECT modelo FROM coches WHERE marca = ' + brand);
+    conexion.query('SELECT modelo FROM coches WHERE marca = ' + brand, (err, results) => {
+        if (err) {
+            console.error('Error fetching car models:', err);
+            res.status(500).json({ error: 'Internal server error' });
+        } else {
+            console.log(results);
+            res.json(results);
+        }
+    });
+});
+
 
 // configuración del puerto para el servidor local
 app.listen(5050, () => {
