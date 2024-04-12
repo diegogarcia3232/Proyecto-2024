@@ -134,10 +134,11 @@ app.get('/api/brands', (req, res) => {
 
 // Método de la API para obtener todos los modelos asociados a una marca concreta:
 app.get('/api/models', (req, res) => {
-    console.log('hola');
-    const brand = req.query.parametro;
-    console.log('SELECT modelo FROM coches WHERE marca = ' + brand);
-    conexion.query('SELECT modelo FROM coches WHERE marca = ' + brand, (err, results) => {
+    // console.log('hola desde /api/models');
+    const brand = req.query.marca;
+    const mysqlRequest = "SELECT DISTINCT modelo FROM coches WHERE marca = '" + brand + "'";
+    // console.log(mysqlRequest);
+    conexion.query(mysqlRequest, (err, results) => {
         if (err) {
             console.error('Error fetching car models:', err);
             res.status(500).json({ error: 'Internal server error' });

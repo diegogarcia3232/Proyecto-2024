@@ -19,10 +19,13 @@
     <background></background>
 
     <div class="header">AutoHistory</div>
+    <div class="content" style="display: flex;">
     <div class="container" style="display: flex;">
 
-        <label for="marcas">Choose a brand:</label>
+        <!-- <label for="marcas">Choose a brand:</label> -->
         <select name="marcas" id="marcas" class="select-box">
+            <option value="default" style="font-weight: bold;">Selecciona una marca</option>
+            <!-- <optgroup label="Selecciona una marca"></optgroup> -->
             <!-- <optgroup label="Coches Suecos">
                 <option value="volvo">Volvo</option>
                 <option value="saab">BMW</option>
@@ -35,29 +38,31 @@
 
         <hr width="75%" color="black"/>
 
-        <div class="dropdown" id="Audi" style="display: none;">
-            <button class="dropbtn">Selecciona el modelo</button>
+        <div class="dropdown" style="display: block;">
+            <button class="dropbtn" id="models_dropbtn">Selecciona el modelo</button>
             <div class="dropdown-content" id="modelContainer">
-                
+                <a href="#">Sin definir</a>
             </div>
         </div>
 
         <hr width="75%" color="black"/>
 
+        <label>Añade un coche a la base de datos:</label>
         <form id="formularioAuto" action="/validar" method="post">
             <input type="text" name="marca" id="marca" placeholder="Marca">
             <input type="text" name="modelo" id="modelo" placeholder="Modelo">
             <input type="text" name="matricula" id="matricula" placeholder="Matricula">
-            <!-- Más campos aquí -->
-            <!-- <button type="submit">Enviar</button> -->
-            <input type="submit" value="Registrar">
+            <button type="submit">Enviar</button>
         </form>
 
         <hr width="75%" color="black"/>
 
+        <!-- FALTA AÑADIR LA FUNCIONALIDAD DE ESTE BOTÓN -->
         <button class="boton">Buscar</button>
     </div>
 
+    
+    </div>
     
     <!-- Scripts finales importados -->
     <!-- <script src="js/conexion.js"></script> -->
@@ -70,7 +75,7 @@
         fetch('/api/brands')
             .then(response => response.json())
             .then(brands => {
-                var i = 0;
+                // var i = 0;
                 brands.forEach(brand => {
                     // console.log("marca #" + i + ": " + brand.marca);
                     // console.log(brand);
@@ -87,53 +92,60 @@
 
         // 3. Selecciona el elemento <select> por su ID
         const modelContainer = document.getElementById('modelContainer');
+        const modelsDropBtn = document.getElementById('models_dropbtn');
 
         // 4. Crea un event handler para el evento 'change'
         brandSelect.addEventListener('change', function(event) {
             // 5. Obtiene el valor actual seleccionado
             const selectedValue = event.target.value;
 
-            // Parámetros que deseas enviar (en este caso, un objeto con una clave "parametro" y un valor)
-            const parametros = {
-                parametro: selectedValue
-            };
-
-            // Configuración del objeto de solicitud
-            const opciones = {
-                method: 'GET', // Método de solicitud (puede ser POST, GET, PUT, DELETE, etc.)
-                headers: {
-                    'Content-Type': 'application/json' // Tipo de contenido que estás enviando
-                },
-                body: JSON.stringify(parametros) // Convertir el objeto de parámetros a formato JSON
-            };
-
             // 6. Llama a una función de Express enviando el valor seleccionado como parámetro
-            enviarValorSeleccionado(selectedValue, opciones);
+            enviarValorSeleccionado(selectedValue);
         });
 
         // 7. Función para enviar el valor seleccionado a Express
-        function enviarValorSeleccionado(valor, opciones) {
+        function enviarValorSeleccionado(valor) {
             // Aquí puedes hacer una petición HTTP a tu servidor Express
-            // para procesar el valor seleccionado. Por ejemplo:
-            const selectedBrand = brandSelect.value;
+
+            // Reseteamos el boton del dropdown:
+            modelsDropBtn.value = 'Selecciona el modelo';
+            modelsDropBtn.innerText = 'Selecciona el modelo';
+
+            // Resetamos el div del dropdown:
             modelContainer.innerHTML = ''; // Clear existing models
 
+            // Definimos la solicitud http queserá enviada al servidor:
+            const httpRequest = `/api/models?marca=${encodeURIComponent(valor)}`;
+            // console.log('petición http: ' + httpRequest);
+
             // Fetch car models for the selected brand
-            fetch('/api/models', opciones)
+            fetch(httpRequest)
             .then(response => response.json())
             .then(models => {
-                var i = 0;
+                // var i = 0;
                 models.forEach(model => {
-                    console.log("modelo #" + i + ": " + model.modelo);
-                    console.log(model);
-                    i++;
-                    // const button = document.createElement('button');
-                    // button.textContent = model;
-                    // modelContainer.appendChild(button);
+                    // console.log("modelo #" + i + ": " + model.modelo);
+                    // console.log(model);
+                    // i++;
+                    const button = document.createElement('a');
+                    button.href = '#';
+                    button.name = 'model_option';
+                    button.textContent = model.modelo;
+                    modelContainer.appendChild(button);
                 });
             });
         };
 
+        // 8. Actualizamos el valor del botón del menú desplegable:
+        modelContainer.addEventListener('click', (event)=>{
+            if (event.target.name === 'model_option') {
+                // Accede al botón que se ha clicado
+                const btnClicado = event.target;
+                const btnInfo = btnClicado.textContent;
+                // console.log('Botón clicado:', btnClicado.textContent);
+                modelsDropBtn.innerText = btnInfo;
+            }
+        });
 
     </script>
 
